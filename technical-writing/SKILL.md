@@ -28,7 +28,7 @@ Before any other work, read BOTH reference files:
 Investigate the codebase to understand the feature:
 
 - Ask which feature or changes they want to write about
-- Use git to check recent commits if relevant: `git log --oneline -10`
+- Use git to check recent commits if relevant (skip if not a git repo): `git log --oneline -10`
 - Read relevant code files to understand implementation
 - Identify key technical decisions, architecture, and interesting details
 - Note any challenges solved or clever solutions
@@ -58,15 +58,12 @@ Create the blog post applying BOTH guides you loaded in Phase 1.
 
 **Code Snippets:**
 - Keep snippets short (5-15 lines)
-- Add comments to highlight key parts
-- Include file paths as context: `src/app/api/webhook/route.ts:45`
-- Show before/after for improvements
 
 **Target length**: 500-1200 words depending on complexity
 
 **2.2 Save the Draft**
 
-Save the completed blog post to `.blog/` using the Write tool:
+Save the completed blog post to `.blog/` (create the folder if missing):
 
 **File naming convention:**
 - Format: `.blog/YYYY-MM-DD-slug.md`
