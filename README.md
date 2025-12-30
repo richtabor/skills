@@ -1,17 +1,22 @@
 # Skills
 
-A collection of custom [Agent Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) that extend Claude's capabilities with specialized knowledge, workflows, and tools.
+A collection of custom skills built on the open [Agent Skills](https://agentskills.io) standard.
+
+These skills work with any compatible agent, including:
+
+- [Claude Code](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) and Claude API
+- [OpenAI Codex](https://developers.openai.com/codex/skills/)
+- [GitHub Copilot](https://github.blog/changelog/2025-12-18-github-copilot-now-supports-agent-skills/)
+- [Cursor](https://cursor.com/docs/context/skills) (nightly channel)
 
 ## What Are Skills?
 
-Skills are modular packages that transform a general-purpose AI agent into a specialized one. They load on-demand and provide:
+Skills are modular packages that transform a general-purpose AI agent into a specialized one. They load on-demand via progressive disclosure and provide:
 
 - **Specialized workflows** — Multi-step procedures for specific domains
 - **Tool integrations** — Scripts and APIs for complex tasks
 - **Domain expertise** — Knowledge, schemas, and business logic
 - **Bundled resources** — References, templates, and assets
-
-Learn more in the [official documentation](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview).
 
 ## Available Skills
 
@@ -29,6 +34,22 @@ skill-name/
 ├── references/           # Optional: Documentation loaded as needed
 ├── scripts/              # Optional: Executable code
 └── assets/               # Optional: Templates, images, etc.
+```
+
+## Installation
+
+Copy skills to the appropriate location for your platform:
+
+| Agent | User-level | Repo-level |
+|-------|------------|------------|
+| Claude Code | `~/.claude/skills/` | `.claude/skills/` |
+| OpenAI Codex | `~/.codex/skills/` | `.codex/skills/` |
+| GitHub Copilot | — | `.github/skills/` or `.claude/skills/` |
+| Cursor | — | [See docs](https://cursor.com/docs/context/skills) |
+
+Example:
+```bash
+cp -r technical-writing ~/.claude/skills/
 ```
 
 ## Setup
