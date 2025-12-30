@@ -9,6 +9,12 @@ These skills work with any compatible agent, including:
 - [GitHub Copilot](https://github.blog/changelog/2025-12-18-github-copilot-now-supports-agent-skills/)
 - [Cursor](https://cursor.com/docs/context/skills) (nightly channel)
 
+## Available Skills
+
+| Skill | Description |
+|-------|-------------|
+| [technical-writing](./technical-writing) | Write technical blog posts about features being built. Analyzes codebase, avoids AI-sounding language, and can publish directly to WordPress. |
+
 ## What Are Skills?
 
 Skills are modular packages that transform a general-purpose AI agent into a specialized one. They load on-demand via progressive disclosure and provide:
@@ -17,12 +23,6 @@ Skills are modular packages that transform a general-purpose AI agent into a spe
 - **Tool integrations** — Scripts and APIs for complex tasks
 - **Domain expertise** — Knowledge, schemas, and business logic
 - **Bundled resources** — References, templates, and assets
-
-## Available Skills
-
-| Skill | Description |
-|-------|-------------|
-| [technical-writing](./technical-writing) | Write technical blog posts about features being built. Analyzes codebase, avoids AI-sounding language, and can publish directly to WordPress. |
 
 ## Structure
 
@@ -59,5 +59,3 @@ Some skills require environment variables. Copy the example file and add your cr
 ```bash
 cp skill-name/.env.example skill-name/.env.local
 ```
-
-Never commit `.env.local` files—they're gitignored by default.
