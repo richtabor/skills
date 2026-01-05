@@ -1,0 +1,32 @@
+{
+  "name": "richtabor-skills",
+  "owner": {
+    "name": "Rich Tabor",
+    "email": "rich@tabor.email"
+  },
+  "metadata": {
+    "description": "A collection of skills for makers",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "writing",
+      "description": "Collection of writing skills for technical blog posts and social content",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/technical-writing",
+        "./skills/x-writing"
+      ]
+    },
+    {
+      "name": "development",
+      "description": "Development skills including accessibility reviews and more",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/accessibility-review"
+      ]
+    }
+  ]
+}
