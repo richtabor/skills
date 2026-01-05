@@ -1,13 +1,20 @@
 ---
-name: social-writing
-description: Transform notes into engaging social content for X (Twitter). Use when the user wants to create posts, threads, or social content from their notes, ideas, or work updates. Analyzes notes to identify shareable insights and crafts authentic posts that drive engagement. MUST follow BOTH references/x-strategy.md (content selection and growth principles) AND references/style-guide.md (voice and tone).
+name: x-writing
+description: Transforms notes into X (Twitter) posts. Triggers when user asks to create social content, draft tweets, or turn notes/ideas into posts.
+approved:
+  - Read:references/*
+  - Read:.social/*
+  - Write:.social/*
+  - Bash:./scripts/fetch-notes.sh*
 ---
 
-# Social Writing Skill
+# X Writing Skill
 
 ## Overview
 
 Transform your notes, work updates, and observations into engaging X (Twitter) content. This skill analyzes your notes to identify the most shareable insights, then crafts authentic posts that match your voice and drive engagement.
+
+**Supports macOS Notes integration** - Automatically fetch ideas from your Notes app to draft posts.
 
 ## Process
 
@@ -30,9 +37,22 @@ Before any other work, read ALL THREE reference files:
 Get clarity on what notes to work with:
 
 - Ask which notes, ideas, or updates they want to transform into posts
-- Read the source material (markdown files, text, or pasted content)
+- **macOS Notes Integration**: When the user asks to "look in my notes" or "fetch from Notes", use `scripts/fetch-notes.sh get` to pull content from their configured Notes app note (default: "Tweets")
+- Read the source material (markdown files, text, pasted content, or Notes app content)
 - Identify the core insights, learnings, or updates
 - Note any specific tools, projects, numbers, or details mentioned
+
+**Using macOS Notes Integration:**
+```bash
+# Fetch content from default note (configured in .env.local)
+./scripts/fetch-notes.sh get
+
+# Fetch content from a specific note
+./scripts/fetch-notes.sh get "Note Name"
+
+# List all available notes
+./scripts/fetch-notes.sh list
+```
 
 **Multiple ideas/notes workflow:**
 - When the user provides multiple distinct ideas or notes, work through them ONE AT A TIME
@@ -90,6 +110,7 @@ Apply BOTH guides loaded in Phase 1:
 - Present tense, active voice
 - 180-250 characters (leave room for RTs)
 - Avoid banned phrases (game-changer, unlock, dive in, leverage)
+- Apply casing preference from CASING_STYLE env var (lowercase by default, capitalize personal names and WordPress)
 
 **From x-strategy.md:**
 - Value first - Give readers something useful

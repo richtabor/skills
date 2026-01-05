@@ -13,7 +13,9 @@ These skills work with any compatible agent, including:
 
 | Skill | Description |
 |-------|-------------|
-| [technical-writing](./technical-writing) | Write technical blog posts about features being built. Analyzes codebase, avoids AI-sounding language, and can publish directly to WordPress. |
+| [accessibility-review](./accessibility-review) | Conducts manual accessibility reviews of UI components, pages, and applications against WCAG 2.1/2.2 Level AA standards. Provides prioritized findings (Critical/Warning) focused on practical, modern web accessibility standards. |
+| [x-writing](./x-writing) | Transforms notes into engaging X (Twitter) posts. Analyzes notes to identify shareable insights and crafts authentic posts that match your voice and drive engagement. Supports macOS Notes integration. |
+| [technical-writing](./technical-writing) | Writes technical blog posts about features being built. Analyzes codebase, avoids AI-sounding language, and can publish directly to WordPress. Supports sentence case titles and headings for a conversational tone. |
 
 ## What Are Skills?
 

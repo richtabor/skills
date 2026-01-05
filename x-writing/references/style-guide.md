@@ -81,6 +81,20 @@ Choose simple words deliberately—not to dumb down, but to be understood.
 - ✓ "30 minutes to ship with Claude Code"
 - ✗ "Way faster than before"
 
+**Lowercase preference** (when CASING_STYLE="lowercase"):
+- Use lowercase for most words, including sentence starts
+- ✓ "january '25: showed devs at an @automattic meetup"
+- ✗ "January '25: Showed devs at an Automattic meetup"
+
+**Capitalization exceptions** (always capitalize these):
+- Personal names: "Rich Tabor", "@riadbenguella"
+- WordPress (the brand): "WordPress", not "wordpress"
+- Product names: "Claude Code", "Cursor"
+- Proper @ mentions: "@automattic" (keep their casing)
+
+**When to use standard casing:**
+If you prefer standard capitalization, set CASING_STYLE="standard" in .env.local
+
 ---
 
 ## Content Type Structures
