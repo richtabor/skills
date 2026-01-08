@@ -7,6 +7,12 @@
 
 set -e
 
+# Helper function to extract error message from JSON response
+extract_error() {
+    local response="$1"
+    echo "$response" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data.get('error', 'Unknown error'))" 2>/dev/null || echo "Unknown error"
+}
+
 # Load environment variables if .env.local exists
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ENV_FILE="$SCRIPT_DIR/../.env.local"
@@ -57,7 +63,7 @@ if [ "$FORMAT" != "markdown" ] && [ "$FORMAT" != "text" ]; then
 fi
 
 # Fetch content using Firecrawl API
-TEMP_FILE=$(mktemp /tmp/firecrawl_response.XXXXXX)
+TEMP_FILE=$(mktemp)
 HTTP_CODE=$(curl -s -w "%{http_code}" -o "$TEMP_FILE" -X POST "https://api.firecrawl.dev/v1/scrape" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $FIRECRAWL_API_KEY" \
@@ -79,13 +85,15 @@ rm -f "$TEMP_FILE"
 
 # Check HTTP status code
 if [ "$HTTP_CODE" -ge 400 ]; then
-    ERROR_MSG=$(echo "$RESPONSE" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data.get('error', 'Unknown error'))" 2>/dev/null || echo "Unknown error")
+    ERROR_MSG=$(extract_error "$RESPONSE")
     echo "Error: API request failed with status $HTTP_CODE: $ERROR_MSG" >&2
     exit 1
 fi
 
-# Check if the request was successful
-if echo "$RESPONSE" | grep -q '"success":true'; then
+# Check if the request was successful using proper JSON parsing
+SUCCESS=$(echo "$RESPONSE" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data.get('success', False))" 2>/dev/null || echo "False")
+
+if [ "$SUCCESS" = "True" ]; then
     # Extract the content based on format
     if [ "$FORMAT" = "markdown" ]; then
         CONTENT=$(echo "$RESPONSE" | python3 -c "
@@ -126,7 +134,7 @@ except (json.JSONDecodeError, KeyError) as e:
     echo "$CONTENT"
 else
     # Extract error message if available
-    ERROR_MSG=$(echo "$RESPONSE" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data.get('error', 'Unknown error'))" 2>/dev/null || echo "Failed to parse error response")
+    ERROR_MSG=$(extract_error "$RESPONSE")
     echo "Error fetching content from URL: $ERROR_MSG" >&2
     exit 1
 fi
