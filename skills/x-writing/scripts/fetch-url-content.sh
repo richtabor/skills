@@ -64,24 +64,26 @@ fi
 
 # Fetch content using Firecrawl API
 TEMP_FILE=$(mktemp)
-HTTP_CODE=$(curl -s -w "%{http_code}" -o "$TEMP_FILE" -X POST "https://api.firecrawl.dev/v1/scrape" \
+# Ensure temp file cleanup on exit
+trap "rm -f '$TEMP_FILE'" EXIT
+
+# Create JSON payload using Python to properly escape values
+PAYLOAD=$(python3 -c "import json, sys; print(json.dumps({'url': sys.argv[1], 'formats': [sys.argv[2]]}))" "$URL" "$FORMAT")
+
+# Send request using stdin to avoid exposing API key in process arguments
+HTTP_CODE=$(echo "$PAYLOAD" | curl -s -w "%{http_code}" -o "$TEMP_FILE" -X POST "https://api.firecrawl.dev/v1/scrape" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $FIRECRAWL_API_KEY" \
-    -d "{
-        \"url\": \"$URL\",
-        \"formats\": [\"$FORMAT\"]
-    }")
+    --data-binary @-)
 
 # Check if curl failed
 if [ $? -ne 0 ] || [ -z "$HTTP_CODE" ]; then
     echo "Error: Failed to connect to Firecrawl API. Check your internet connection." >&2
-    rm -f "$TEMP_FILE"
     exit 1
 fi
 
 # Read the response
 RESPONSE=$(cat "$TEMP_FILE")
-rm -f "$TEMP_FILE"
 
 # Check HTTP status code
 if [ "$HTTP_CODE" -ge 400 ]; then
