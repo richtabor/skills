@@ -32,6 +32,13 @@ fi
 URL="$1"
 FORMAT="${2:-markdown}"
 
+# Validate URL format
+if [[ ! "$URL" =~ ^https?:// ]]; then
+    echo "Error: Invalid URL format. URL must start with http:// or https://"
+    echo "Provided: $URL"
+    exit 1
+fi
+
 # Check for Firecrawl API key
 if [ -z "$FIRECRAWL_API_KEY" ]; then
     echo "Error: FIRECRAWL_API_KEY environment variable is not set"
@@ -50,7 +57,8 @@ if [ "$FORMAT" != "markdown" ] && [ "$FORMAT" != "text" ]; then
 fi
 
 # Fetch content using Firecrawl API
-HTTP_CODE=$(curl -s -w "%{http_code}" -o /tmp/firecrawl_response.json -X POST "https://api.firecrawl.dev/v1/scrape" \
+TEMP_FILE=$(mktemp /tmp/firecrawl_response.XXXXXX)
+HTTP_CODE=$(curl -s -w "%{http_code}" -o "$TEMP_FILE" -X POST "https://api.firecrawl.dev/v1/scrape" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $FIRECRAWL_API_KEY" \
     -d "{
@@ -61,17 +69,17 @@ HTTP_CODE=$(curl -s -w "%{http_code}" -o /tmp/firecrawl_response.json -X POST "h
 # Check if curl failed
 if [ $? -ne 0 ] || [ -z "$HTTP_CODE" ]; then
     echo "Error: Failed to connect to Firecrawl API. Check your internet connection." >&2
-    rm -f /tmp/firecrawl_response.json
+    rm -f "$TEMP_FILE"
     exit 1
 fi
 
 # Read the response
-RESPONSE=$(cat /tmp/firecrawl_response.json)
-rm -f /tmp/firecrawl_response.json
+RESPONSE=$(cat "$TEMP_FILE")
+rm -f "$TEMP_FILE"
 
 # Check HTTP status code
 if [ "$HTTP_CODE" -ge 400 ]; then
-    ERROR_MSG=$(echo "$RESPONSE" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data.get('error', 'HTTP error $HTTP_CODE'))" 2>/dev/null || echo "HTTP error $HTTP_CODE")
+    ERROR_MSG=$(echo "$RESPONSE" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data.get('error', 'Unknown error'))" 2>/dev/null || echo "Unknown error")
     echo "Error: API request failed with status $HTTP_CODE: $ERROR_MSG" >&2
     exit 1
 fi
