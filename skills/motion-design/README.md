@@ -5,9 +5,9 @@ Designs intentional, purposeful motion for product UI. Evaluates animation needs
 ## Quick Start
 
 1. Open a component or page you want to animate
-2. Ask: "How should I animate this dropdown?" or "What easing for this modal?"
+2. Ask: "How should I animate this dropdown?", "This animation feels too slow", or "Make this feel more alive"
 3. The skill evaluates purpose, frequency, and pattern type
-4. Returns specific tokens, implementation code, and anti-patterns to avoid
+4. Returns specific tokens and implementation code
 
 ## What It Does
 
@@ -16,7 +16,7 @@ Designs intentional, purposeful motion for product UI. Evaluates animation needs
 - Provides duration guidance matched to interaction frequency
 - Identifies transform-origin for origin-aware animations
 - Decides between spring vs bezier, bounce vs no-bounce
-- Flags anti-patterns specific to each component type
+- Refines existing animations that feel off (too fast, too slow, unnatural)
 
 ## Evaluation Process
 
@@ -26,7 +26,7 @@ The skill follows this process for each animation request:
 2. **Assesses frequency** - High (keyboard), medium (common), or low (rare/illustrative)
 3. **Determines pattern type** - Enter/exit, morph, time-based, hover, or keyboard
 4. **Recommends tokens** - Specific easing curve and duration from the reference set
-5. **Provides implementation** - Code example with anti-patterns to avoid
+5. **Provides implementation** - Code example ready to use
 
 ## Core Principles
 

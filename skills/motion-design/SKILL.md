@@ -1,6 +1,6 @@
 ---
 name: motion-design
-description: Provides motion design guidance for UI components. Triggers on "animate this", "what easing", "motion for", or requests about transitions, animations, and micro-interactions.
+description: Provides motion design guidance for UI components. Triggers on animation requests ("animate this", "add transition", "motion for"), refinement requests ("clean up this animation", "this feels too fast/slow", "make this feel more alive/natural"), and questions about easing, timing, or micro-interactions.
 ---
 
 # Motion Design
@@ -47,7 +47,7 @@ How often will users trigger this?
 
 What kind of motion is this?
 
-- **Enter/exit** - Popover, modal, toast, dropdown appearing or leaving
+- **Enter/exit** - Popover, modal, toast, dropdown appearing or leaving (exits are typically faster than enters—users want things gone quickly)
 - **On-screen morph** - Layout shift, expanding content, repositioning
 - **Time-based** - Progress indicator, marquee, hold-to-delete
 - **Hover/subtle** - Color change, opacity fade, background shift
