@@ -25,7 +25,8 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/accessibility-review"
+        "./skills/accessibility-review",
+        "./skills/web-animation"
       ]
     }
   ]
